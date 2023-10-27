@@ -856,6 +856,7 @@ class ManagerThread(threading.Thread):
 class CliThread(threading.Thread):
     def __init__(self, context, kill_event):
         super().__init__()
+        self.exit_code = 0
         self._commands = context.commands
         self._kill_event = kill_event
         if context.device:
@@ -868,8 +869,9 @@ class CliThread(threading.Thread):
                 command = self._commands.popleft()
                 rv = command()
                 if rv != 0:
-                    break
+                    self.exit_code = rv
         except Exception as ex:
+            self.exit_code = 1
             _log.error('Command processing returned exception: ' + str(ex))
         self._kill_event.set()
 
@@ -909,6 +911,7 @@ def cli_main(argv):
         rv = command()
 
     manager_thread.join()
+    return cli_thread.exit_code
 
 def main():
     return cli_main(sys.argv[1:])
