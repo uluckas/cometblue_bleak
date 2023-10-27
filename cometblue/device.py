@@ -8,7 +8,8 @@ import logging
 import struct
 import uuid as uuid_module
 
-import gatt
+from cometblue import gatt
+
 import time
 import six
 
@@ -453,8 +454,9 @@ class CometBlue(gatt.Device):
 
         _log.debug('Read value "%s" from "%s": %r',
                    uuid, self.mac_address, value)
-        if len(value.signature) != 1:
-            raise RuntimeError('Got more than one value')
+        # ToDo: Find out where the signature comes from
+        #if len(value.signature) != 1:
+        #    raise RuntimeError('Got more than one value')
 
         value = bytes(int(byte) for byte in value)
         value = decode(value)

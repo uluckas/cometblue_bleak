@@ -3,7 +3,8 @@ from __future__ import absolute_import
 
 import logging
 
-import gatt
+from cometblue import gatt
+
 import time
 import six
 

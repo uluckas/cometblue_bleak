@@ -10,7 +10,8 @@ import json
 import logging
 import os
 import sys
-import gatt
+from cometblue import gatt
+
 
 import click
 import shellescape
