@@ -400,7 +400,7 @@ class DeviceManager:
 
     async def _start_discovery(self, service_uuids=[]):
         self._stop_scanning_event = asyncio.Event()
-        async with BleakScanner(self._discovery_callback, service_uuids=service_uuids) as _:
+        async with BleakScanner(self._discovery_callback, service_uuids=service_uuids, adapter = self.adapter_name) as _:
             await self._stop_scanning_event.wait()
 
     def start_discovery(self, service_uuids=[]):
